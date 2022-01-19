@@ -10,8 +10,8 @@ import {
 import { Context } from '../context/BlogContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default function IndexScreen() {
-  const { state, addBlogPost } = useContext(Context);
+export default function IndexScreen({ navigation }) {
+  const { state, addBlogPost, deleteBlogPost } = useContext(Context);
   return (
     <View>
       <Button title="Add Post" onPress={addBlogPost} />
@@ -20,18 +20,22 @@ export default function IndexScreen() {
         keyExtractor={(blogPost) => blogPost.title}
         renderItem={({ item }) => {
           return (
-            <View style={styles.row}>
-              <Text style={styles.title}>
-                {item.title} - {item.id}
-              </Text>
-              <TouchableOpacity onPress={() => console.log(item.id)}>
-                <MaterialCommunityIcons
-                  name="trash-can-outline"
-                  size={24}
-                  color="black"
-                />
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Show', { id: item.id })}
+            >
+              <View style={styles.row}>
+                <Text style={styles.title}>
+                  {item.title} - {item.id}
+                </Text>
+                <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
+                  <MaterialCommunityIcons
+                    name="trash-can-outline"
+                    size={24}
+                    color="black"
+                  />
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
           );
         }}
       />
