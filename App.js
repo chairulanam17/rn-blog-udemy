@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import IndexScreen from './src/screens/IndexScreen';
-import { BlogProvider } from './src/context/BlogContext';
+import { Provider } from './src/context/BlogContext';
 
 const Stack = createStackNavigator();
 
@@ -13,7 +13,7 @@ function MyStack() {
       screenOptions={{
         headerMode: 'screen',
         headerTintColor: 'white',
-        headerStyle: { backgroundColor: 'tomato' },
+        headerStyle: { backgroundColor: 'lightseagreen' },
       }}
     >
       <Stack.Screen
@@ -27,9 +27,9 @@ function MyStack() {
 export default function App() {
   return (
     <NavigationContainer>
-      <BlogProvider>
+      <Provider>
         <MyStack />
-      </BlogProvider>
+      </Provider>
     </NavigationContainer>
   );
 }
