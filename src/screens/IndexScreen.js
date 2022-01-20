@@ -10,11 +10,25 @@ import {
 import { Context } from '../context/BlogContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default function IndexScreen({ navigation }) {
-  const { state, addBlogPost, deleteBlogPost } = useContext(Context);
+export default function IndexScreen({ navigation, route }) {
+  const { state, deleteBlogPost } = useContext(Context);
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <View style={{ flexDirection: 'row' }}>
+          <TouchableOpacity
+            style={styles.iconContainer}
+            onPress={() => navigation.navigate('Create')}
+          >
+            <MaterialCommunityIcons name="plus" style={styles.headerIcon} />
+          </TouchableOpacity>
+        </View>
+      ),
+    });
+  }, [navigation]);
   return (
     <View>
-      <Button title="Add Post" onPress={addBlogPost} />
       <FlatList
         data={state}
         keyExtractor={(blogPost) => blogPost.title}
@@ -54,5 +68,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
+  },
+  iconContainer: {
+    marginRight: 10,
+  },
+  headerIcon: {
+    fontSize: 30,
+    marginRight: 5,
+    color: 'white',
   },
 });
