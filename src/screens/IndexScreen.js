@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   Button,
   FlatList,
@@ -11,7 +11,7 @@ import { Context } from '../context/BlogContext';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function IndexScreen({ navigation, route }) {
-  const { state, deleteBlogPost } = useContext(Context);
+  const { state, deleteBlogPost, getBlogPost } = useContext(Context);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -27,6 +27,12 @@ export default function IndexScreen({ navigation, route }) {
       ),
     });
   }, [navigation]);
+
+  useEffect(() => {
+    getBlogPost();
+
+    return navigation.addListener('focus', () => getBlogPost());
+  }, []);
   return (
     <View>
       <FlatList
